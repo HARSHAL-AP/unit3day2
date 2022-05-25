@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+        display: grid;
+        width: 80%;
+        margin: auto;
+        margin-top: 50px;
+        gap: 20px;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      #container > div {
+        border: 1px solid;
+        border-radius: 20px;
+        border-color: rgb(239, 244, 250);
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+          rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      }
+
+      #counter {
+        width: 450px;
+        height: 40px;
+        padding-top: 20px;
+        background-color: rgb(104, 102, 102);
+        border: 1px solid;
+        border-radius: 20px;
+        border-color: rgb(67, 68, 69);
+        border-radius: 15px;
+        font-weight: bold;
+        color: white;
+        display: block;
+        text-align: center;
+      }
+
+      #sold {
+        margin-right: 15px;
+        padding: 5px 20px;
+        border: none;
+      }
+
+      #remove {
+        background-color: black;
+        color: white;
+        padding: 3px 5px;
+      }
+
+      #box {
+        padding: 25px;
+        border: 1px solid;
+        width: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="counter"></div>
+    <div id="container"></div>
+  </body>
+</html>
+<script>
+  let arr = JSON.parse(localStorage.getItem("Product")) || [];
+
+  let length = arr.length;
+
+  document.getElementById(
+    "counter"
+  ).innerText = ` ${length} PRODUCTS IN THE CART`;
+
+  arr.map(function (ele, index) {
+    let box = document.createElement("div");
+    box.setAttribute("id", "box");
+
+    let name = document.createElement("h4");
+    name.innerText = `Product Name: ${ele.Product_name}`;
+
+    let category = document.createElement("p");
+    category.innerText = `Category: ${ele.Product_category}`;
+
+    let img = document.createElement("img");
+    img.src = ele.Product_image;
+
+    let price = document.createElement("p");
+    price.innerText = `Rs: ${ele.Product_price}`;
+
+    let gender = document.createElement("p");
+    gender.innerText = `Gender: ${ele.Product_gender}`;
+
+    soldbutton = document.createElement("button");
+    soldbutton.innerText = "Sold";
+    soldbutton.setAttribute("id", "sold");
+    if (ele.Produt_solddata == true) {
+      soldbutton.style.backgroundColor = "Red";
+    } else {
+      soldbutton.style.backgroundColor = "green";
+    }
+
+    let removebuttton = document.createElement("button");
+    removebuttton.innerText = "Remove";
+    removebuttton.id = "remove";
+    removebuttton.addEventListener("click", function () {
+      remove(ele, index);
+    });
+
+    box.append(img, name, category, price, gender, soldbutton, removebuttton);
+
+    document.querySelector("#container").append(box);
+  });
+
+  function remove(ele, index) {
+    arr.splice(index, 1);
+
+    localStorage.setItem("Product", JSON.stringify(arr));
+    window.location.reload();
+  }
+</script>
