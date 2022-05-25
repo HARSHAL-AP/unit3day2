@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  let Amar = {
+    profession: ["singer"],
+  };
+
+  let Akbar = {
+    profession: ["chef"],
+  };
+
+  let Anthony = {
+    profession: ["Magician"],
+  };
+
+  function shareSkill(a) {
+    this.profession.push(a);
+  }
+
+  shareSkill.call(Amar, Akbar.profession);
+  shareSkill.call(Amar, Anthony.profession[0]);
+  shareSkill.call(Akbar, Amar.profession[0]);
+  shareSkill.call(Akbar, Anthony.profession[0]);
+  shareSkill.call(Anthony, Amar.profession[0]);
+  shareSkill.call(Anthony, Akbar.profession[0]);
+  console.log(Amar);
+  console.log(Akbar);
+  console.log(Anthony);
+</script>
